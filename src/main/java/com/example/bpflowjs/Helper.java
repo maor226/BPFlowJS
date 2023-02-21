@@ -20,5 +20,10 @@ public class Helper implements brige {
         // TODO Auto-generated method stub
         return null;
     }
+
+    public  boolean update_diagram(String diagram) {
+        // TODO Auto-generated method stub
+        return false;
+    }
 }
 
