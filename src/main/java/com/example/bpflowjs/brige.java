@@ -8,7 +8,5 @@ public interface brige {
 
     List<DiagramRunStep> run_diagram();
 
-
-
 }
 
