@@ -4,8 +4,10 @@ import il.ac.bgu.cs.bp.bpjs.execution.BProgramRunner;
 import il.ac.bgu.cs.bp.bpjs.execution.listeners.BProgramRunnerListener;
 import il.ac.bgu.cs.bp.bpjs.model.*;
 
-import java.io.File;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Future;
 
 class main {
 
@@ -16,7 +18,7 @@ class main {
 
 
         // This will load the program file  <Project>/src/main/resources/HelloBPjsWorld.js
-        final BProgram bProg = new  ResourceBProgram("js/BPFlow-Base.js", "js/HelloWorld.js");
+        final BProgram bProg = new  ResourceBProgram("js/BPFlow-Base.js");
 
         BProgramRunner rnr = new BProgramRunner(bProg);
 
@@ -27,28 +29,34 @@ class main {
         rnr.run();
     }
 }
+
+
 class bpFlowLisiner implements BProgramRunnerListener{
+
+    static final String diagram = "diagram";
+
+        List<DiagramRunStep> run =new LinkedList<>();
+        public bpFlowLisiner(){
+        }
 
         @Override
         public void starting(BProgram bProgram) {
-            System.out.println("------------starting-----------");
 
         }
 
         @Override
         public void started(BProgram bProgram) {
-            System.out.println("-------------start------------");
+
         }
 
         @Override
         public void superstepDone(BProgram bProgram) {
-            System.out.println("------------------------------");
+            bProgram.getFromGlobalScope("diagram", String.class).ifPresent(s -> run.add(new DiagramRunStepImpl(s)));
+
         }
 
         @Override
         public void ended(BProgram bProgram) {
-            System.out.println("------------ended------------");
-
         }
 
         @Override
@@ -78,6 +86,10 @@ class bpFlowLisiner implements BProgramRunnerListener{
 
         @Override
         public void halted(BProgram bProgram) {
-            System.out.println("------------halted------------");
+            Thread.currentThread().interrupt();
         }
+
+    public List<DiagramRunStep> getRun() {
+        return run;
+    }
 }
