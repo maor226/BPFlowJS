@@ -10,28 +10,32 @@ import java.util.List;
 @RestController
 public class Helper implements brige {
 
-    private static Integer stepIndex;
+    private List<DiagramRunStep> stepList =null;
+
     @GetMapping("/send_diagram")
     public boolean send_diagram(String diagram) {
         // TODO Auto-generated method stub
         return false;
     }
 
+    /**
+     * @return the next step in the diagram run or null is the diagram finish running
+     */
     @GetMapping("/run_step")
     public DiagramRunStep run_step() {
-        List<DiagramRunStep> runStepsList =run_diagram();
         DiagramRunStep runStep=null;
-        if (stepIndex==null)
-            stepIndex=0;
-        if (stepIndex< runStepsList.size())
-            runStep= runStepsList.get(stepIndex);
-            stepIndex++;
+        if (stepList==null)
+            stepList =run_diagram();
+        if (!stepList.isEmpty())
+            runStep = stepList.remove(0);
+        else
+            stepList=null;
         return runStep;
     }
 
     @GetMapping("/run_diagram")
     public List<DiagramRunStep> run_diagram() {
-        // TODO Auto-generated method stub
+        //TODO implement the run_diagram
         List<DiagramRunStep> runStepsList=new ArrayList<DiagramRunStep>();
         return runStepsList;
     }
