@@ -5,15 +5,15 @@ import java.util.Map;
 
 public class DiagramRunStepImpl implements DiagramRunStep {
 
-    private String diagram;
+    private Diagram diagram;
 
-    public DiagramRunStepImpl(String diagram) {
+    public DiagramRunStepImpl(Diagram diagram) {
         this.diagram = diagram;
     }
 
     @Override
     public String get_diagram() {
-        return diagram;
+        return diagram.toString();
     }
 
     @Override

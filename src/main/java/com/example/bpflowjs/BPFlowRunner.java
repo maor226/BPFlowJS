@@ -9,15 +9,17 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
 public class BPFlowRunner implements  brige{
-
+    Diagram diagram;
     @Override
     public boolean send_diagram(String diagram){
-        return false;
+        this.diagram = new Diagram(diagram);
+        return true;
     }
 
     @Override
     public List<DiagramRunStep> run_diagram() {
-        final BProgram bprog = new ResourceBProgram("BPFlow-Base.js");
+        final BProgram bprog = new ResourceBProgram("BPFlow-Base.js","BPFlow-BuildDiagram.js");
+        bprog.putInGlobalScope("diagram", diagram);
 
         BProgramRunner rnr = new BProgramRunner(bprog);
 

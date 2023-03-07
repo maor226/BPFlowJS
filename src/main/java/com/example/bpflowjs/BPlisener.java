@@ -51,7 +51,7 @@ class bpFlowLisiner implements BProgramRunnerListener{
 
         @Override
         public void superstepDone(BProgram bProgram) {
-            bProgram.getFromGlobalScope("diagram", String.class).ifPresent(s -> run.add(new DiagramRunStepImpl(s)));
+            bProgram.getFromGlobalScope("diagram", Diagram.class).ifPresent(s -> run.add(new DiagramRunStepImpl(s)));
 
         }
 
